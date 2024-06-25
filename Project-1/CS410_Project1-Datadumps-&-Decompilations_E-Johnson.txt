@@ -1,0 +1,643 @@
+; Created by Edward Johnson 06/04/24
+; SNHU - CS410 - Project 1
+
+
+------------------------------------------------------------------------------------------------------
+# Named function & variable / string addresses:
+------------------------------------------------------------------------------------------------------
+
+Addresses:  (0x+) ex:0x1219                                      Names:
+    0000000000001219 g     F .text	0000000000000120              main
+    0000000000001339 g     F .text	0000000000000121              CheckUserPermissionAccess()
+    000000000000145a g     F .text	00000000000001ec              DisplayInfo()
+    0000000000001646 g     F .text	00000000000000ce              ChangeCustomerChoice()
+
+    00000000000043a0 g     O .bss	0000000000000004              answer
+    0000000000004394 g     O .bss	0000000000000004              choice
+    0000000000004398 g     O .bss	0000000000000004              changechoice
+    000000000000439c g     O .bss	0000000000000004              newservice
+
+    0000000000004380 g     O .bss	0000000000000014              username
+    0000000000004100 g     O .data	0000000000000014              password
+
+    0000000000004090 g     O .data	000000000000000a              name1
+    00000000000040e0 g     O .data	0000000000000004              num1
+
+    00000000000040e4 g     O .data	0000000000000004              num2
+    00000000000040a0 g     O .data	000000000000000c              name2
+
+    00000000000040e8 g     O .data	0000000000000004              num3
+    00000000000040b0 g     O .data	000000000000000d              name3
+
+    00000000000040ec g     O .data	0000000000000004              num4
+    00000000000040c0 g     O .data	000000000000000d              name4
+
+    00000000000040f0 g     O .data	0000000000000004              num5
+    00000000000040d0 g     O .data	000000000000000d              name5
+
+
+
+------------------------------------------------------------------------------------------------------
+# String addresses & values (sorted by function) extracted with gdb x/s command.
+------------------------------------------------------------------------------------------------------
+
+  Additional finds:
+            0x4100 <password>:      "123"
+            0x2124: "123"  # this is also the password (in CheckUserPermissionAccess function call)
+
+  Main():
+      Adresses:
+            0x2010: "Hello! Welcome to our Investment Company\n"
+            0x2040: "Invalid Password. Please try again\n"
+            0x2064: "What would you like to do?\n"
+            0x2080: "DISPLAY the client list (enter 1)\n"
+            0x20a8: "CHANGE a client's choice (enter 2)\n"
+            0x20cc: "Exit the program.. (enter 3)\n"
+            0x20ea: "You chose "
+            0x4394 <choice>:        ""
+            0x43a0 <answer>:        ""
+            0x3fb8: ""
+
+  CheckUserPermissionAccess():
+      Addresses:
+            0x3fb9: ""
+            0x20f5: ""
+            0x4380 <username>:      ""
+            0x20f6: "Enter your username: \n"
+            0x210d: "Enter your password: \n"
+            0x2124: "123"   # this is the password
+            0x4260 <_ZSt3cin@GLIBCXX_3.4>:  ""
+
+  DisplayInfo():
+      Addresses:
+            0x2128: "  Client's Name    Service Selected (1 = Brokerage, 2 = Retirement)"
+            0x2170: " selected option "
+
+            0x216c: "1. "
+            0x4090 <name1>: "Bob Jones"
+            0x40e0 <num1>:  "\001"
+
+            0x2182: "2. "
+            0x40a0 <name2>: "Sarah Davis"
+            0x40e4 <num2>:  "\002"
+
+            0x2186: "3. "
+            0x40b0 <name3>: "Amy Friendly"
+            0x40e8 <num3>:  "\001"
+
+            0x218a: "4. "
+            0x40c0 <name4>: "Johnny Smith"
+            0x40ec <num4>:  "\001"
+
+            0x218e: "5. "
+            0x40d0 <name5>: "Carol Spears"
+            0x40f0 <num5>:  "\002"
+
+            0x3fb8: "" # std::endl
+
+ChangeCustomerChoice():
+      Addresses:
+            0x439c <newservice>:    ""
+            0x4398 <changechoice>:  ""
+
+            0x40e0 <num1>:  "\001"
+            0x40e4 <num2>:  "\002"
+            0x40e8 <num3>:  "\001"
+            0x40ec <num4>:  "\001"
+            0x40f0 <num5>:  "\002"
+
+
+
+
+----------------------------------------------------
+# Contents of section .rodata:
+----------------------------------------------------
+
+ 2000 01000200 00000000 00000000 00000000  ................
+ 2010 48656c6c 6f212057 656c636f 6d652074  Hello! Welcome t
+ 2020 6f206f75 7220496e 76657374 6d656e74  o our Investment
+ 2030 20436f6d 70616e79 0a000000 00000000   Company........
+ 2040 496e7661 6c696420 50617373 776f7264  Invalid Password
+ 2050 2e20506c 65617365 20747279 20616761  . Please try aga
+ 2060 696e0a00 57686174 20776f75 6c642079  in..What would y
+ 2070 6f75206c 696b6520 746f2064 6f3f0a00  ou like to do?..
+ 2080 44495350 4c415920 74686520 636c6965  DISPLAY the clie
+ 2090 6e74206c 69737420 28656e74 65722031  nt list (enter 1
+ 20a0 290a0000 00000000 4348414e 47452061  ).......CHANGE a
+ 20b0 20636c69 656e7427 73206368 6f696365   client's choice
+ 20c0 2028656e 74657220 32290a00 45786974   (enter 2)..Exit
+ 20d0 20746865 2070726f 6772616d 2e2e2028   the program.. (
+ 20e0 656e7465 72203329 0a00596f 75206368  enter 3)..You ch
+ 20f0 6f736520 0000456e 74657220 796f7572  ose ..Enter your
+ 2100 20757365 726e616d 653a200a 00456e74   username: ..Ent
+ 2110 65722079 6f757220 70617373 776f7264  er your password
+ 2120 3a200a00 31323300 2020436c 69656e74  : ..123.  Client
+ 2130 2773204e 616d6520 20202053 65727669  's Name    Servi
+ 2140 63652053 656c6563 74656420 2831203d  ce Selected (1 =
+ 2150 2042726f 6b657261 67652c20 32203d20   Brokerage, 2 = 
+ 2160 52657469 72656d65 6e742900 312e2000  Retirement).1. .
+ 2170 2073656c 65637465 64206f70 74696f6e   selected option
+ 2180 2000322e 2000332e 2000342e 2000352e   .2. .3. .4. .5.
+ 2190 20000000 00000000 456e7465 72207468   .......Enter th
+ 21a0 65206e75 6d626572 206f6620 74686520  e number of the 
+ 21b0 636c6965 6e742074 68617420 796f7520  client that you 
+ 21c0 77697368 20746f20 6368616e 67650a00  wish to change..
+ 21d0 506c6561 73652065 6e746572 20746865  Please enter the
+ 21e0 20636c69 656e7427 73206e65 77207365   client's new se
+ 21f0 72766963 65206368 6f696365 20283120  rvice choice (1 
+ 2200 3d204272 6f6b6572 6167652c 2032203d  = Brokerage, 2 =
+ 2210 20526574 6972656d 656e7429 0a00       Retirement)..  
+
+
+----------------------------------------------------
+# Contents of section .data:
+----------------------------------------------------
+
+ 4080 00000000 00000000 88400000 00000000  .........@......
+ 4090 426f6220 4a6f6e65 73000000 00000000  Bob Jones.......
+ 40a0 53617261 68204461 76697300 00000000  Sarah Davis.....
+ 40b0 416d7920 46726965 6e646c79 00000000  Amy Friendly....
+ 40c0 4a6f686e 6e792053 6d697468 00000000  Johnny Smith....
+ 40d0 4361726f 6c205370 65617273 00000000  Carol Spears....
+ 40e0 01000000 02000000 01000000 01000000  ................
+ 40f0 02000000 00000000 00000000 00000000  ................
+ 4100 31323300 00000000 00000000 00000000  123.............
+ 4110 00000000 00000000 00000000 00000000  ................
+
+
+
+
+
+----------------------------------------------------
+# Disassembly of section .data:
+----------------------------------------------------
+
+0000000000004090 <name1>:
+    4090:	42 6f                	rex.X outsl %ds:(%rsi),(%dx)
+    4092:	62                   	(bad)
+    4093:	20 4a 6f             	and    %cl,0x6f(%rdx)
+    4096:	6e                   	outsb  %ds:(%rsi),(%dx)
+    4097:	65 73 00             	gs jae 409a <name1+0xa>
+    409a:	00 00                	add    %al,(%rax)
+    409c:	00 00                	add    %al,(%rax)
+
+00000000000040a0 <name2>:
+    40a0:	53                   	push   %rbx
+    40a1:	61                   	(bad)
+    40a2:	72 61                	jb     4105 <password+0x5>
+    40a4:	68 20 44 61 76       	push   $0x76614420
+    40a9:	69 73 00 00 00 00 00 	imul   $0x0,0x0(%rbx),%esi
+
+00000000000040b0 <name3>:
+    40b0:	41 6d                	rex.B insl (%dx),%es:(%rdi)
+    40b2:	79 20                	jns    40d4 <name5+0x4>
+    40b4:	46 72 69             	rex.RX jb 4120 <__TMC_END__>
+    40b7:	65 6e                	outsb  %gs:(%rsi),(%dx)
+    40b9:	64 6c                	fs insb (%dx),%es:(%rdi)
+    40bb:	79 00                	jns    40bd <name3+0xd>
+    40bd:	00 00                	add    %al,(%rax)
+
+00000000000040c0 <name4>:
+    40c0:	4a 6f                	rex.WX outsl %ds:(%rsi),(%dx)
+    40c2:	68 6e 6e 79 20       	push   $0x20796e6e
+    40c7:	53                   	push   %rbx
+    40c8:	6d                   	insl   (%dx),%es:(%rdi)
+    40c9:	69 74 68 00 00 00 00 	imul   $0x43000000,0x0(%rax,%rbp,2),%esi
+    40d0:	 
+
+00000000000040d0 <name5>:
+    40d0:	43 61                	rex.XB (bad)
+    40d2:	72 6f                	jb     4143 <_ZSt4cout@GLIBCXX_3.4+0x3>
+    40d4:	6c                   	insb   (%dx),%es:(%rdi)
+    40d5:	20 53 70             	and    %dl,0x70(%rbx)
+    40d8:	65 61                	gs (bad)
+    40da:	72 73                	jb     414f <_ZSt4cout@GLIBCXX_3.4+0xf>
+    40dc:	00 00                	add    %al,(%rax)
+
+00000000000040e0 <num1>:
+    40e0:	01 00                	add    %eax,(%rax)
+
+00000000000040e4 <num2>:
+    40e4:	02 00                	add    (%rax),%al
+
+00000000000040e8 <num3>:
+    40e8:	01 00                	add    %eax,(%rax)
+
+00000000000040ec <num4>:
+    40ec:	01 00                	add    %eax,(%rax)
+
+00000000000040f0 <num5>:
+    40f0:	02 00                	add    (%rax),%al
+
+0000000000004100 <password>:
+    4100:	31 32                	xor    %esi,(%rdx)
+    4102:	33 00                	xor    (%rax),%eax
+
+
+
+--------------------------------------------------------------------------------------------------------
+# All disassembly done using disassemblers sourced / licensed by dogbolt.org:
+--------------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------
+Disassembly using Ghidra:
+----------------------------------------------------
+
+undefined8 main(void)
+
+{
+  basic_ostream *this;
+  basic_ostream<char,std::char_traits<char>> *this_00;
+  
+
+  std::operator<<((basic_ostream *)std::cout,"Hello! Welcome to our Investment Company\n");
+  do {
+    answer = CheckUserPermissionAccess();
+    if (answer != 1) {
+      std::operator<<((basic_ostream *)std::cout,"Invalid Password. Please try again\n");
+    }
+  } while (answer != 1);
+  do {
+    std::operator<<((basic_ostream *)std::cout,"What would you like to do?\n");
+    std::operator<<((basic_ostream *)std::cout,"DISPLAY the client list (enter 1)\n");
+    std::operator<<((basic_ostream *)std::cout,"CHANGE a client\'s choice (enter 2)\n");
+    std::operator<<((basic_ostream *)std::cout,"Exit the program.. (enter 3)\n");
+    std::basic_istream<char,std::char_traits<char>>::operator>>
+              ((basic_istream<char,std::char_traits<char>> *)std::cin,&choice);
+    this = std::operator<<((basic_ostream *)std::cout,"You chose ");
+    this_00 = (basic_ostream<char,std::char_traits<char>> *)
+              std::basic_ostream<char,std::char_traits<char>>::operator<<
+                        ((basic_ostream<char,std::char_traits<char>> *)this,choice);
+    std::basic_ostream<char,std::char_traits<char>>::operator<<
+              (this_00,std::endl<char,std::char_traits<char>>);
+    if (choice == 1) {
+      DisplayInfo();
+    }
+    else if (choice == 2) {
+      ChangeCustomerChoice();
+    }
+  } while (choice != 3);
+  return 0;
+}
+
+
+// WARNING: Unknown calling convention -- yet parameter storage is locked
+// CheckUserPermissionAccess()
+
+undefined8 CheckUserPermissionAccess(void)
+
+{
+  undefined8 uVar1;
+  long in_FS_OFFSET;
+  allocator<char> local_4d;
+  int local_4c;
+  basic_string local_48 [40];
+  long local_20;
+  
+  local_20 = *(long *)(in_FS_OFFSET + 0x28);
+  std::allocator<char>::allocator();
+                    // try { // try from 0010136f to 00101373 has its CatchHandler @ 0010141a
+  std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string
+            ((char *)local_48,(allocator *)&DAT_001020f5);
+  std::allocator<char>::~allocator(&local_4d);
+  local_4c = 0;
+                    // try { // try from 00101395 to 001013d2 has its CatchHandler @ 00101434
+  std::operator<<((basic_ostream *)std::cout,"Enter your username: \n");
+  std::operator>>((basic_istream *)std::cin,username);
+  std::operator<<((basic_ostream *)std::cout,"Enter your password: \n");
+  std::operator>>((basic_istream *)std::cin,local_48);
+  local_4c = std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>::compare
+                       ((char *)local_48);
+  if (local_4c == 0) {
+    uVar1 = 1;
+  }
+  else {
+    uVar1 = 2;
+  }
+  std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>::~basic_string
+            ((basic_string<char,std::char_traits<char>,std::allocator<char>> *)local_48);
+  if (local_20 != *(long *)(in_FS_OFFSET + 0x28)) {
+                    // WARNING: Subroutine does not return
+    __stack_chk_fail();
+  }
+  return uVar1;
+}
+
+
+
+// WARNING: Unknown calling convention -- yet parameter storage is locked
+// DisplayInfo()
+
+void DisplayInfo(void)
+
+{
+  basic_ostream *pbVar1;
+  basic_ostream<char,std::char_traits<char>> *pbVar2;
+  
+  pbVar1 = std::operator<<((basic_ostream *)std::cout,
+                           "  Client\'s Name    Service Selected (1 = Brokerage, 2 = Retirement)");
+  std::basic_ostream<char,std::char_traits<char>>::operator<<
+            ((basic_ostream<char,std::char_traits<char>> *)pbVar1,
+             std::endl<char,std::char_traits<char>>);
+  pbVar1 = std::operator<<((basic_ostream *)std::cout,"1. ");
+  pbVar1 = std::operator<<(pbVar1,name1);
+  pbVar1 = std::operator<<(pbVar1," selected option ");
+  pbVar2 = (basic_ostream<char,std::char_traits<char>> *)
+           std::basic_ostream<char,std::char_traits<char>>::operator<<
+                     ((basic_ostream<char,std::char_traits<char>> *)pbVar1,num1);
+  std::basic_ostream<char,std::char_traits<char>>::operator<<
+            (pbVar2,std::endl<char,std::char_traits<char>>);
+  pbVar1 = std::operator<<((basic_ostream *)std::cout,"2. ");
+  pbVar1 = std::operator<<(pbVar1,name2);
+  pbVar1 = std::operator<<(pbVar1," selected option ");
+  pbVar2 = (basic_ostream<char,std::char_traits<char>> *)
+           std::basic_ostream<char,std::char_traits<char>>::operator<<
+                     ((basic_ostream<char,std::char_traits<char>> *)pbVar1,num2);
+  std::basic_ostream<char,std::char_traits<char>>::operator<<
+            (pbVar2,std::endl<char,std::char_traits<char>>);
+  pbVar1 = std::operator<<((basic_ostream *)std::cout,"3. ");
+  pbVar1 = std::operator<<(pbVar1,name3);
+  pbVar1 = std::operator<<(pbVar1," selected option ");
+  pbVar2 = (basic_ostream<char,std::char_traits<char>> *)
+           std::basic_ostream<char,std::char_traits<char>>::operator<<
+                     ((basic_ostream<char,std::char_traits<char>> *)pbVar1,num3);
+  std::basic_ostream<char,std::char_traits<char>>::operator<<
+            (pbVar2,std::endl<char,std::char_traits<char>>);
+  pbVar1 = std::operator<<((basic_ostream *)std::cout,"4. ");
+  pbVar1 = std::operator<<(pbVar1,name4);
+  pbVar1 = std::operator<<(pbVar1," selected option ");
+  pbVar2 = (basic_ostream<char,std::char_traits<char>> *)
+           std::basic_ostream<char,std::char_traits<char>>::operator<<
+                     ((basic_ostream<char,std::char_traits<char>> *)pbVar1,num4);
+  std::basic_ostream<char,std::char_traits<char>>::operator<<
+            (pbVar2,std::endl<char,std::char_traits<char>>);
+  pbVar1 = std::operator<<((basic_ostream *)std::cout,"5. ");
+  pbVar1 = std::operator<<(pbVar1,name5);
+  pbVar1 = std::operator<<(pbVar1," selected option ");
+  pbVar2 = (basic_ostream<char,std::char_traits<char>> *)
+           std::basic_ostream<char,std::char_traits<char>>::operator<<
+                     ((basic_ostream<char,std::char_traits<char>> *)pbVar1,num5);
+  std::basic_ostream<char,std::char_traits<char>>::operator<<
+            (pbVar2,std::endl<char,std::char_traits<char>>);
+  return;
+}
+
+
+
+// WARNING: Unknown calling convention -- yet parameter storage is locked
+// ChangeCustomerChoice()
+
+void ChangeCustomerChoice(void)
+
+{
+  std::operator<<((basic_ostream *)std::cout,
+                  "Enter the number of the client that you wish to change\n");
+
+  std::basic_istream<char,std::char_traits<char>>::operator>>
+            ((basic_istream<char,std::char_traits<char>> *)std::cin,&changechoice);
+
+  std::operator<<((basic_ostream *)std::cout,
+                  "Please enter the client\'s new service choice (1 = Brokerage, 2 = Retirement)\n")
+  ;
+  std::basic_istream<char,std::char_traits<char>>::operator>>
+            ((basic_istream<char,std::char_traits<char>> *)std::cin,&newservice);
+  if (changechoice == 1) {
+    num1 = newservice;
+  }
+  else if (changechoice == 2) {
+    num2 = newservice;
+  }
+  else if (changechoice == 3) {
+    num3 = newservice;
+  }
+  else if (changechoice == 4) {
+    num4 = newservice;
+  }
+  else if (changechoice == 5) {
+    num5 = newservice;
+  }
+  return;
+}
+
+
+
+
+
+----------------------------------------------------
+Disassembly using IDAPro (Hex-Rays)
+----------------------------------------------------
+
+
+//----- (0000000000001219) ----------------------------------------------------
+int __fastcall main(int argc, const char **argv, const char **envp)
+{
+  __int64 v3; // rax
+  __int64 v4; // rax
+
+  std::operator<<<std::char_traits<char>>(&std::cout, "Hello! Welcome to our Investment Company\n");
+  do
+  {
+    answer = CheckUserPermissionAccess();
+    if ( answer != 1 )
+      std::operator<<<std::char_traits<char>>(&std::cout, "Invalid Password. Please try again\n");
+  }
+  while ( answer != 1 );
+  do
+  {
+    std::operator<<<std::char_traits<char>>(&std::cout, "What would you like to do?\n");
+    std::operator<<<std::char_traits<char>>(&std::cout, "DISPLAY the client list (enter 1)\n");
+    std::operator<<<std::char_traits<char>>(&std::cout, "CHANGE a client's choice (enter 2)\n");
+    std::operator<<<std::char_traits<char>>(&std::cout, "Exit the program.. (enter 3)\n");
+    std::istream::operator>>(&std::cin, &choice);
+    v3 = std::operator<<<std::char_traits<char>>(&std::cout, "You chose ");
+    v4 = std::ostream::operator<<(v3, (unsigned int)choice);
+    std::ostream::operator<<(v4, &std::endl<char,std::char_traits<char>>);
+    if ( choice == 1 )
+    {
+      DisplayInfo();
+    }
+    else if ( choice == 2 )
+    {
+      ChangeCustomerChoice();
+    }
+  }
+  while ( choice != 3 );
+  return 0;
+}
+// 1050: using guessed type __int64 __fastcall std::istream::operator>>(_QWORD, _QWORD);
+// 1080: using guessed type __int64 __fastcall std::operator<<<std::char_traits<char>>(_QWORD, _QWORD);
+// 1090: using guessed type __int64 __fastcall std::ostream::operator<<(_QWORD, _QWORD);
+// 10F0: using guessed type __int64 __fastcall std::ostream::operator<<(_QWORD, _QWORD);
+// 4394: using guessed type int choice;
+// 43A0: using guessed type int answer;
+
+//----- (0000000000001339) ----------------------------------------------------
+__int64 CheckUserPermissionAccess(void)
+{
+  unsigned int v0; // ebx
+  char v2; // [rsp+Bh] [rbp-45h] BYREF
+  int v3; // [rsp+Ch] [rbp-44h]
+  char v4[40]; // [rsp+10h] [rbp-40h] BYREF
+  unsigned __int64 v5; // [rsp+38h] [rbp-18h]
+
+  v5 = __readfsqword(0x28u);
+  std::allocator<char>::allocator(&v2);
+  std::string::basic_string(v4, &unk_20F5, &v2);
+  std::allocator<char>::~allocator(&v2);
+  v3 = 0;
+  std::operator<<<std::char_traits<char>>(&std::cout, "Enter your username: \n");
+  std::operator>><char,std::char_traits<char>>(&std::cin, &username);
+  std::operator<<<std::char_traits<char>>(&std::cout, "Enter your password: \n");
+  std::operator>><char>(&std::cin, v4);
+  v3 = std::string::compare(v4, "123");
+  if ( v3 )
+    v0 = 2;
+  else
+    v0 = 1;
+  std::string::~string(v4);
+  return v0;
+}
+// 1030: using guessed type __int64 __fastcall std::operator>><char,std::char_traits<char>>(_QWORD, _QWORD);
+// 1040: using guessed type __int64 __fastcall std::string::compare(_QWORD, _QWORD);
+// 1060: using guessed type __int64 __fastcall std::string::~string(_QWORD);
+// 1080: using guessed type __int64 __fastcall std::operator<<<std::char_traits<char>>(_QWORD, _QWORD);
+// 10A0: using guessed type __int64 __fastcall std::allocator<char>::~allocator(_QWORD);
+// 10C0: using guessed type __int64 __fastcall std::operator>><char>(_QWORD, _QWORD);
+// 10D0: using guessed type __int64 __fastcall std::string::basic_string(_QWORD, _QWORD, _QWORD);
+// 1110: using guessed type __int64 __fastcall std::allocator<char>::allocator(_QWORD);
+
+//----- (000000000000145A) ----------------------------------------------------
+__int64 DisplayInfo(void)
+{
+  __int64 v0; // rax
+  __int64 v1; // rax
+  __int64 v2; // rax
+  __int64 v3; // rax
+  __int64 v4; // rax
+  __int64 v5; // rax
+  __int64 v6; // rax
+  __int64 v7; // rax
+  __int64 v8; // rax
+  __int64 v9; // rax
+  __int64 v10; // rax
+  __int64 v11; // rax
+  __int64 v12; // rax
+  __int64 v13; // rax
+  __int64 v14; // rax
+  __int64 v15; // rax
+  __int64 v16; // rax
+  __int64 v17; // rax
+  __int64 v18; // rax
+  __int64 v19; // rax
+  __int64 v20; // rax
+
+  v0 = std::operator<<<std::char_traits<char>>(
+         &std::cout,
+         "  Client's Name    Service Selected (1 = Brokerage, 2 = Retirement)");
+  std::ostream::operator<<(v0, &std::endl<char,std::char_traits<char>>);
+  v1 = std::operator<<<std::char_traits<char>>(&std::cout, "1. ");
+  v2 = std::operator<<<std::char_traits<char>>(v1, name1);
+  v3 = std::operator<<<std::char_traits<char>>(v2, " selected option ");
+  v4 = std::ostream::operator<<(v3, (unsigned int)num1);
+  std::ostream::operator<<(v4, &std::endl<char,std::char_traits<char>>);
+  v5 = std::operator<<<std::char_traits<char>>(&std::cout, "2. ");
+  v6 = std::operator<<<std::char_traits<char>>(v5, name2);
+  v7 = std::operator<<<std::char_traits<char>>(v6, " selected option ");
+  v8 = std::ostream::operator<<(v7, (unsigned int)num2);
+  std::ostream::operator<<(v8, &std::endl<char,std::char_traits<char>>);
+  v9 = std::operator<<<std::char_traits<char>>(&std::cout, "3. ");
+  v10 = std::operator<<<std::char_traits<char>>(v9, name3);
+  v11 = std::operator<<<std::char_traits<char>>(v10, " selected option ");
+  v12 = std::ostream::operator<<(v11, (unsigned int)num3);
+  std::ostream::operator<<(v12, &std::endl<char,std::char_traits<char>>);
+  v13 = std::operator<<<std::char_traits<char>>(&std::cout, "4. ");
+  v14 = std::operator<<<std::char_traits<char>>(v13, name4);
+  v15 = std::operator<<<std::char_traits<char>>(v14, " selected option ");
+  v16 = std::ostream::operator<<(v15, (unsigned int)num4);
+  std::ostream::operator<<(v16, &std::endl<char,std::char_traits<char>>);
+  v17 = std::operator<<<std::char_traits<char>>(&std::cout, "5. ");
+  v18 = std::operator<<<std::char_traits<char>>(v17, name5);
+  v19 = std::operator<<<std::char_traits<char>>(v18, " selected option ");
+  v20 = std::ostream::operator<<(v19, (unsigned int)num5);
+  return std::ostream::operator<<(v20, &std::endl<char,std::char_traits<char>>);
+}
+// 1080: using guessed type __int64 __fastcall std::operator<<<std::char_traits<char>>(_QWORD, _QWORD);
+// 1090: using guessed type __int64 __fastcall std::ostream::operator<<(_QWORD, _QWORD);
+// 10F0: using guessed type __int64 __fastcall std::ostream::operator<<(_QWORD, _QWORD);
+// 40E0: using guessed type int num1;
+// 40E4: using guessed type int num2;
+// 40E8: using guessed type int num3;
+// 40EC: using guessed type int num4;
+// 40F0: using guessed type int num5;
+
+//----- (0000000000001646) ----------------------------------------------------
+__int64 ChangeCustomerChoice(void)
+{
+  __int64 result; // rax
+
+  std::operator<<<std::char_traits<char>>(&std::cout, "Enter the number of the client that you wish to change\n");
+  std::istream::operator>>(&std::cin, &changechoice);
+  std::operator<<<std::char_traits<char>>(
+    &std::cout,
+    "Please enter the client's new service choice (1 = Brokerage, 2 = Retirement)\n");
+  std::istream::operator>>(&std::cin, &newservice);
+  switch ( changechoice )
+  {
+    case 1:
+      result = (unsigned int)newservice;
+      num1 = newservice;
+      break;
+    case 2:
+      result = (unsigned int)newservice;
+      num2 = newservice;
+      break;
+    case 3:
+      result = (unsigned int)newservice;
+      num3 = newservice;
+      break;
+    case 4:
+      result = (unsigned int)newservice;
+      num4 = newservice;
+      break;
+    default:
+      result = (unsigned int)changechoice;
+      if ( changechoice == 5 )
+      {
+        result = (unsigned int)newservice;
+        num5 = newservice;
+      }
+      break;
+  }
+  return result;
+}
+// 1050: using guessed type __int64 __fastcall std::istream::operator>>(_QWORD, _QWORD);
+// 1080: using guessed type __int64 __fastcall std::operator<<<std::char_traits<char>>(_QWORD, _QWORD);
+// 40E0: using guessed type int num1;
+// 40E4: using guessed type int num2;
+// 40E8: using guessed type int num3;
+// 40EC: using guessed type int num4;
+// 40F0: using guessed type int num5;
+// 4398: using guessed type int changechoice;
+// 439C: using guessed type int newservice;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

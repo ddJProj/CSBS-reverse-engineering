@@ -1,0 +1,550 @@
+; Created by Edward Johnson 
+; SNHU - CS410
+; Module 6 Binary to C++ : with Security Vulnerabilities
+; 06/12/24
+
+
+
+
+;--------------------------------------------------------------------
+;		 ORIGINAL CPP Code with comments added:
+;--------------------------------------------------------------------
+;
+
+#include <iostream>
+
+void DisplayMenu();
+
+int main() {
+
+  int32_t intInputChoice = 0; // initialized with value 0
+  int32_t intFirstInput; // not initialized with value
+  int32_t intSecondInput; // not initialized with value
+
+  // minus is only math operator used in cout statements
+  // even in cases where calculation is addition / division
+  std::string minus = " - ";
+  std::string equals = " = ";
+
+  while (intInputChoice != 5) { // while input choice != 5
+
+    /** FIXME: Doesn't follow DRY
+     * DisplayMenu() fn is never called to print menu. code duplicated
+     * at start of loop, replace with a single fn call to DisplayMenu()
+     */
+    std::cout << "----------------" << std::endl;
+    std::cout << "- 1)Add -" << std::endl;
+    std::cout << "- 2)Subtract -" << std::endl;
+    std::cout << "- 3)Multiply -" << std::endl;
+    std::cout << "- 4)Exit -" << std::endl;
+    std::cout << "----------------" << std::endl;
+
+    /** FIXME: condense int inputs into fn call, return sanitized / validated
+     * value as integer include exception handling, type validation
+     * ex: int inputOne = getIntInput();
+     * currently no validation
+     */
+    std::cin >> intInputChoice; // get input and store in our control variable
+
+    if (intInputChoice == 5) {
+      break;
+
+
+    } else if (intInputChoice == 1) { // branch 1 should be addition but math is subtract
+
+      // input repeated in each branch
+      std::cin >> intFirstInput;
+      std::cin >> intSecondInput;
+
+      std::cout << intFirstInput;
+      std::cout << minus;
+      std::cout << intSecondInput;
+      std::cout << equals;
+      //FIXME: No over/underflow protection
+      std::cout << intFirstInput - intSecondInput;
+      std::cout << std::endl;
+
+    } else if (intInputChoice ==
+               2) { //  branch 2 should be subtraction but we add the values
+
+      // input repeated in each branch
+      std::cin >> intFirstInput;
+      std::cin >> intSecondInput;
+
+      std::cout << intFirstInput;
+      std::cout << minus;
+      std::cout << intSecondInput;
+      std::cout << equals;
+      //FIXME: No over/underflow protection
+      std::cout << intFirstInput + intSecondInput;
+      std::cout << std::endl;
+    } else if (intInputChoice == 3) { // branch 3 should be multiplication, but we divide
+
+      // input repeated in each branch
+      std::cin >> intFirstInput;
+      std::cin >> intSecondInput;
+
+      std::cout << intFirstInput;
+      std::cout << minus;
+      std::cout << intSecondInput;
+      std::cout << equals;
+
+      //FIXME: No over/underflow protection, no zero /0 checks
+      std::cout << (intFirstInput / intSecondInput); // use integer division
+      std::cout << std::endl;
+    }
+  }
+  return 0;
+}
+
+// function to print menu options, never gets called
+void DisplayMenu() {
+
+  std::cout << "----------------" << std::endl;
+  std::cout << "- 1)Add -" << std::endl;
+  std::cout << "- 2)Subtract -" << std::endl;
+  std::cout << "- 3)Multiply -" << std::endl;
+  std::cout << "- 4)Exit -" << std::endl;
+  std::cout << "----------------" << std::endl;
+}
+
+
+
+
+;--------------------------------------------------------------------
+;		 String contents:
+;--------------------------------------------------------------------
+; using (gdb) x/s
+
+Address: 0x2049: 
+Contents: '-' <repeats 16 times>, "\n"
+
+Address: 0x205b:
+Contents: "- 1)Add -\n"
+
+Address: 0x2066:
+Contents: "- 2)Subtract -\n"
+
+Address: 0x2076:
+Contents: "- 3)Multiply -\n"
+
+Address: 0x2086:
+Contents: "- 4)Exit -\n"
+
+Address: 0x2049:
+Contents: '-' <repeats 16 times>, "\n"
+
+Address: 0x2092:
+Contents: " - "
+
+Address: 0x2096: 
+Contents: " = "
+
+
+; cout / output stream:
+Address: 0x4080 :  
+Contents: <std::cout@GLIBCXX_3.4>
+
+
+; input / cin:
+Address: 0x41a0 :
+Contents: <_ZSt3cin@GLIBCXX_3.4>:  ""
+
+
+; std::endline char:
+Address: 0x3fb8: 
+Contents: & std::endl <char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&)@GLIBCXX_3.4>
+
+
+
+
+;--------------------------------------------------------------------
+;	    Additional data / information:
+;--------------------------------------------------------------------
+
+
+Contents of section .rodata:
+ 2000 01000200 002d2d2d 2d2d2d2d 2d2d2d2d  .....-----------
+ 2010 2d2d2d2d 2d002d20 31294164 64202d00  -----.- 1)Add -.
+ 2020 2d203229 53756274 72616374 202d002d  - 2)Subtract -.-
+ 2030 2033294d 756c7469 706c7920 2d002d20   3)Multiply -.- 
+ 2040 34294578 6974202d 002d2d2d 2d2d2d2d  4)Exit -.-------
+ 2050 2d2d2d2d 2d2d2d2d 2d0a002d 20312941  ---------..- 1)A
+ 2060 6464202d 0a002d20 32295375 62747261  dd -..- 2)Subtra
+ 2070 6374202d 0a002d20 33294d75 6c746970  ct -..- 3)Multip
+ 2080 6c79202d 0a002d20 34294578 6974202d  ly -..- 4)Exit -
+ 2090 0a00202d 2000203d 2000          
+
+
+
+;--------------------------------------------------------------------
+;--------------------------------------------------------------------
+
+ Contents of section .data:
+ 4038 00000000 00000000 40400000 00000000  ........@@......
+
+
+;--------------------------------------------------------------------
+;--------------------------------------------------------------------
+
+	
+ SYMBOL TABLE:
+0000000000000000 l    df *ABS*	0000000000000000              Scrt1.o
+000000000000037c l     O .note.ABI-tag	0000000000000020              __abi_tag
+0000000000000000 l    df *ABS*	0000000000000000              crtstuff.c
+00000000000010e0 l     F .text	0000000000000000              deregister_tm_clones
+0000000000001110 l     F .text	0000000000000000              register_tm_clones
+0000000000001150 l     F .text	0000000000000000              __do_global_dtors_aux
+00000000000042b8 l     O .bss	0000000000000001              completed.0
+0000000000003db8 l     O .fini_array	0000000000000000              __do_global_dtors_aux_fini_array_entry
+0000000000001190 l     F .text	0000000000000000              frame_dummy
+0000000000003da8 l     O .init_array	0000000000000000              __frame_dummy_init_array_entry
+0000000000000000 l    df *ABS*	0000000000000000              assignment6_1.cpp
+0000000000002004 l     O .rodata	0000000000000001              _ZStL19piecewise_construct
+00000000000042b9 l     O .bss	0000000000000001              _ZStL8__ioinit
+00000000000014bc l     F .text	0000000000000049              _Z41__static_initialization_and_destruction_0ii
+0000000000001505 l     F .text	0000000000000015              _GLOBAL__sub_I__Z11DisplayMenuv
+0000000000000000 l    df *ABS*	0000000000000000              crtstuff.c
+00000000000021e8 l     O .eh_frame	0000000000000000              __FRAME_END__
+0000000000000000 l    df *ABS*	0000000000000000              
+000000000000209c l       .eh_frame_hdr	0000000000000000              __GNU_EH_FRAME_HDR
+0000000000003dc0 l     O .dynamic	0000000000000000              _DYNAMIC
+0000000000003fe8 l     O .got.plt	0000000000000000              _GLOBAL_OFFSET_TABLE_
+0000000000004048 g       .data	0000000000000000              _edata
+0000000000004038  w      .data	0000000000000000              data_start
+0000000000002000 g     O .rodata	0000000000000004              _IO_stdin_used
+0000000000000000  w    F *UND*	0000000000000000              __cxa_finalize@GLIBC_2.2.5
+0000000000001212 g     F .text	00000000000002aa              main
+0000000000000000       F *UND*	0000000000000000              _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_@GLIBCXX_3.4
+0000000000004040 g     O .data	0000000000000000              .hidden __dso_handle
+0000000000000000       F *UND*	0000000000000000              _ZNSirsERi@GLIBCXX_3.4
+000000000000151c g     F .fini	0000000000000000              .hidden _fini
+0000000000000000       F *UND*	0000000000000000              __libc_start_main@GLIBC_2.34
+0000000000000000       F *UND*	0000000000000000              __cxa_atexit@GLIBC_2.2.5
+00000000000010b0 g     F .text	0000000000000022              _start
+0000000000000000       F *UND*	0000000000000000              _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc@GLIBCXX_3.4
+0000000000000000       F *UND*	0000000000000000              _ZNSolsEPFRSoS_E@GLIBCXX_3.4
+0000000000000000       F *UND*	0000000000000000              __stack_chk_fail@GLIBC_2.4
+0000000000001000 g     F .init	0000000000000000              .hidden _init
+0000000000001199 g     F .text	0000000000000079              _Z11DisplayMenuv
+0000000000004048 g     O .data	0000000000000000              .hidden __TMC_END__
+0000000000004080 g     O .bss	0000000000000110              _ZSt4cout@GLIBCXX_3.4
+0000000000004038 g       .data	0000000000000000              __data_start
+00000000000042c0 g       .bss	0000000000000000              _end
+0000000000004048 g       .bss	0000000000000000              __bss_start
+0000000000000000       F *UND*	0000000000000000              _ZNSt8ios_base4InitC1Ev@GLIBCXX_3.4
+0000000000000000       F *UND*	0000000000000000              _ZNSolsEi@GLIBCXX_3.4
+0000000000000000  w      *UND*	0000000000000000              _ITM_deregisterTMCloneTable
+00000000000041a0 g     O .bss	0000000000000118              _ZSt3cin@GLIBCXX_3.4
+0000000000000000  w      *UND*	0000000000000000              __gmon_start__
+0000000000000000  w      *UND*	0000000000000000              _ITM_registerTMCloneTable
+0000000000000000       F *UND*	0000000000000000              _ZNSt8ios_base4InitD1Ev@GLIBCXX_3.4
+
+
+
+
+
+
+
+
+;--------------------------------------------------------------------
+;--------------------------------------------------------------------
+;	   		  Decompilations : 
+;--------------------------------------------------------------------
+;--------------------------------------------------------------------
+
+
+
+
+
+
+;--------------------------------------------------------------------
+;	   		  Ghidra: 
+;--------------------------------------------------------------------
+
+
+
+
+// WARNING: Unknown calling convention -- yet parameter storage is locked
+// DisplayMenu()
+
+void DisplayMenu(void)
+
+{
+  std::operator<<((basic_ostream *)std::cout,"----------------");
+  std::operator<<((basic_ostream *)std::cout,"- 1)Add -");
+  std::operator<<((basic_ostream *)std::cout,"- 2)Subtract -");
+  std::operator<<((basic_ostream *)std::cout,"- 3)Multiply -");
+  std::operator<<((basic_ostream *)std::cout,"- 4)Exit -");
+  std::operator<<((basic_ostream *)std::cout,"----------------");
+  return;
+}
+
+
+
+undefined8 main(void)
+
+{
+  basic_istream<char,std::char_traits<char>> *pbVar1;
+  basic_ostream *pbVar2;
+  basic_ostream<char,std::char_traits<char>> *pbVar3;
+  long in_FS_OFFSET;
+  int local_1c;
+  int local_18;
+  int local_14;
+  long local_10;
+  
+  local_10 = *(long *)(in_FS_OFFSET + 0x28);
+  local_1c = 0;
+  while (local_1c != 5) {
+    std::operator<<((basic_ostream *)std::cout,"----------------\n");
+    std::operator<<((basic_ostream *)std::cout,"- 1)Add -\n");
+    std::operator<<((basic_ostream *)std::cout,"- 2)Subtract -\n");
+    std::operator<<((basic_ostream *)std::cout,"- 3)Multiply -\n");
+    std::operator<<((basic_ostream *)std::cout,"- 4)Exit -\n");
+    std::operator<<((basic_ostream *)std::cout,"----------------\n");
+    std::basic_istream<char,std::char_traits<char>>::operator>>
+              ((basic_istream<char,std::char_traits<char>> *)std::cin,&local_1c);
+    if (local_1c == 1) {
+      pbVar1 = (basic_istream<char,std::char_traits<char>> *)
+               std::basic_istream<char,std::char_traits<char>>::operator>>
+                         ((basic_istream<char,std::char_traits<char>> *)std::cin,&local_18);
+      std::basic_istream<char,std::char_traits<char>>::operator>>(pbVar1,&local_14);
+      pbVar2 = (basic_ostream *)
+               std::basic_ostream<char,std::char_traits<char>>::operator<<
+                         ((basic_ostream<char,std::char_traits<char>> *)std::cout,local_18);
+      pbVar2 = std::operator<<(pbVar2," - ");
+      pbVar2 = (basic_ostream *)
+               std::basic_ostream<char,std::char_traits<char>>::operator<<
+                         ((basic_ostream<char,std::char_traits<char>> *)pbVar2,local_14);
+      pbVar2 = std::operator<<(pbVar2," = ");
+      pbVar3 = (basic_ostream<char,std::char_traits<char>> *)
+               std::basic_ostream<char,std::char_traits<char>>::operator<<
+                         ((basic_ostream<char,std::char_traits<char>> *)pbVar2,local_18 - local_14);
+      std::basic_ostream<char,std::char_traits<char>>::operator<<
+                (pbVar3,std::endl<char,std::char_traits<char>>);
+    }
+    else if (local_1c == 2) {
+      pbVar1 = (basic_istream<char,std::char_traits<char>> *)
+               std::basic_istream<char,std::char_traits<char>>::operator>>
+                         ((basic_istream<char,std::char_traits<char>> *)std::cin,&local_18);
+      std::basic_istream<char,std::char_traits<char>>::operator>>(pbVar1,&local_14);
+      pbVar2 = (basic_ostream *)
+               std::basic_ostream<char,std::char_traits<char>>::operator<<
+                         ((basic_ostream<char,std::char_traits<char>> *)std::cout,local_18);
+      pbVar2 = std::operator<<(pbVar2," - ");
+      pbVar2 = (basic_ostream *)
+               std::basic_ostream<char,std::char_traits<char>>::operator<<
+                         ((basic_ostream<char,std::char_traits<char>> *)pbVar2,local_14);
+      pbVar2 = std::operator<<(pbVar2," = ");
+      pbVar3 = (basic_ostream<char,std::char_traits<char>> *)
+               std::basic_ostream<char,std::char_traits<char>>::operator<<
+                         ((basic_ostream<char,std::char_traits<char>> *)pbVar2,local_14 + local_18);
+      std::basic_ostream<char,std::char_traits<char>>::operator<<
+                (pbVar3,std::endl<char,std::char_traits<char>>);
+    }
+    else if (local_1c == 3) {
+      pbVar1 = (basic_istream<char,std::char_traits<char>> *)
+               std::basic_istream<char,std::char_traits<char>>::operator>>
+                         ((basic_istream<char,std::char_traits<char>> *)std::cin,&local_18);
+      std::basic_istream<char,std::char_traits<char>>::operator>>(pbVar1,&local_14);
+      pbVar2 = (basic_ostream *)
+               std::basic_ostream<char,std::char_traits<char>>::operator<<
+                         ((basic_ostream<char,std::char_traits<char>> *)std::cout,local_18);
+      pbVar2 = std::operator<<(pbVar2," - ");
+      pbVar2 = (basic_ostream *)
+               std::basic_ostream<char,std::char_traits<char>>::operator<<
+                         ((basic_ostream<char,std::char_traits<char>> *)pbVar2,local_14);
+      pbVar2 = std::operator<<(pbVar2," = ");
+      pbVar3 = (basic_ostream<char,std::char_traits<char>> *)
+               std::basic_ostream<char,std::char_traits<char>>::operator<<
+                         ((basic_ostream<char,std::char_traits<char>> *)pbVar2,local_18 / local_14);
+      std::basic_ostream<char,std::char_traits<char>>::operator<<
+                (pbVar3,std::endl<char,std::char_traits<char>>);
+    }
+  }
+  if (local_10 != *(long *)(in_FS_OFFSET + 0x28)) {
+                    // WARNING: Subroutine does not return
+    __stack_chk_fail();
+  }
+  return 0;
+}
+
+
+
+
+
+
+
+;--------------------------------------------------------------------
+;	   		  IDAPro (HexRays): 
+;--------------------------------------------------------------------
+
+
+
+__int64 DisplayMenu(void)
+{
+  std::operator<<<std::char_traits<char>>(&std::cout, "----------------");
+  std::operator<<<std::char_traits<char>>(&std::cout, "- 1)Add -");
+  std::operator<<<std::char_traits<char>>(&std::cout, "- 2)Subtract -");
+  std::operator<<<std::char_traits<char>>(&std::cout, "- 3)Multiply -");
+  std::operator<<<std::char_traits<char>>(&std::cout, "- 4)Exit -");
+  return std::operator<<<std::char_traits<char>>(&std::cout, "----------------");
+}
+
+
+// 1050: using guessed type __int64 __fastcall std::operator<<<std::char_traits<char>>(_QWORD, _QWORD);
+
+//----- (0000000000001212) ----------------------------------------------------
+int __fastcall main(int argc, const char **argv, const char **envp)
+{
+  __int64 v3; // rax
+  __int64 v4; // rax
+  __int64 v5; // rax
+  __int64 v6; // rax
+  __int64 v7; // rax
+  __int64 v8; // rax
+  __int64 v9; // rax
+  __int64 v10; // rax
+  __int64 v11; // rax
+  __int64 v12; // rax
+  __int64 v13; // rax
+  __int64 v14; // rax
+  __int64 v15; // rax
+  __int64 v16; // rax
+  __int64 v17; // rax
+  __int64 v18; // rax
+  __int64 v19; // rax
+  __int64 v20; // rax
+  int v22; // [rsp+Ch] [rbp-14h] BYREF
+  unsigned int v23; // [rsp+10h] [rbp-10h] BYREF
+  unsigned int v24; // [rsp+14h] [rbp-Ch] BYREF
+  unsigned __int64 v25; // [rsp+18h] [rbp-8h]
+
+  v25 = __readfsqword(0x28u);
+  v22 = 0;
+  while ( v22 != 5 )
+  {
+    std::operator<<<std::char_traits<char>>(&std::cout, "----------------\n");
+    std::operator<<<std::char_traits<char>>(&std::cout, "- 1)Add -\n");
+    std::operator<<<std::char_traits<char>>(&std::cout, "- 2)Subtract -\n");
+    std::operator<<<std::char_traits<char>>(&std::cout, "- 3)Multiply -\n");
+    std::operator<<<std::char_traits<char>>(&std::cout, "- 4)Exit -\n");
+    std::operator<<<std::char_traits<char>>(&std::cout, "----------------\n");
+    std::istream::operator>>(&std::cin, &v22);
+    switch ( v22 )
+    {
+      case 1:
+        v3 = std::istream::operator>>(&std::cin, &v23);
+        std::istream::operator>>(v3, &v24);
+        v4 = std::ostream::operator<<(&std::cout, v23);
+        v5 = std::operator<<<std::char_traits<char>>(v4, " - ");
+        v6 = std::ostream::operator<<(v5, v24);
+        v7 = std::operator<<<std::char_traits<char>>(v6, " = ");
+        v8 = std::ostream::operator<<(v7, v23 - v24);
+        std::ostream::operator<<(v8, &std::endl<char,std::char_traits<char>>);
+        break;
+      case 2:
+        v9 = std::istream::operator>>(&std::cin, &v23);
+        std::istream::operator>>(v9, &v24);
+        v10 = std::ostream::operator<<(&std::cout, v23);
+        v11 = std::operator<<<std::char_traits<char>>(v10, " - ");
+        v12 = std::ostream::operator<<(v11, v24);
+        v13 = std::operator<<<std::char_traits<char>>(v12, " = ");
+        v14 = std::ostream::operator<<(v13, v23 + v24);
+        std::ostream::operator<<(v14, &std::endl<char,std::char_traits<char>>);
+        break;
+      case 3:
+        v15 = std::istream::operator>>(&std::cin, &v23);
+        std::istream::operator>>(v15, &v24);
+        v16 = std::ostream::operator<<(&std::cout, v23);
+        v17 = std::operator<<<std::char_traits<char>>(v16, " - ");
+        v18 = std::ostream::operator<<(v17, v24);
+        v19 = std::operator<<<std::char_traits<char>>(v18, " = ");
+        v20 = std::ostream::operator<<(v19, (unsigned int)((int)v23 / (int)v24));
+        std::ostream::operator<<(v20, &std::endl<char,std::char_traits<char>>);
+        break;
+    }
+  }
+  return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;--------------------------------------------------------------------
+;	   		  BinaryNinja: 
+;--------------------------------------------------------------------
+
+
+
+
+
+class std::ostream* DisplayMenu()
+{
+    std::operator<<<std::char_traits<char> >(&std::cout, "----------------");
+    std::operator<<<std::char_traits<char> >(&std::cout, "- 1)Add -");
+    std::operator<<<std::char_traits<char> >(&std::cout, "- 2)Subtract -");
+    std::operator<<<std::char_traits<char> >(&std::cout, "- 3)Multiply -");
+    std::operator<<<std::char_traits<char> >(&std::cout, "- 4)Exit -");
+    return std::operator<<<std::char_traits<char> >(&std::cout, "----------------");
+}
+
+
+
+int32_t main(int32_t argc, char** argv, char** envp)
+{
+    void* fsbase;
+    int64_t rax = *(fsbase + 0x28);
+    int32_t __n = 0;
+    while (__n != 5)
+    {
+        std::operator<<<std::char_traits<char> >(&std::cout, "----------------\n");
+        std::operator<<<std::char_traits<char> >(&std::cout, "- 1)Add -\n");
+        std::operator<<<std::char_traits<char> >(&std::cout, "- 2)Subtract -\n");
+        std::operator<<<std::char_traits<char> >(&std::cout, "- 3)Multiply -\n");
+        std::operator<<<std::char_traits<char> >(&std::cout, "- 4)Exit -\n");
+        std::operator<<<std::char_traits<char> >(&std::cout, "----------------\n");
+        std::istream::operator>>(&std::cin, &__n);
+        int32_t __n_1;
+        int32_t __n_2;
+        if (__n == 1)
+        {
+            std::istream::operator>>(std::istream::operator>>(&std::cin, &__n_1), &__n_2);
+            std::ostream::operator<<(std::ostream::operator<<(std::operator<<<std::char_traits<char> >(std::ostream::operator<<(std::operator<<<std::char_traits<char> >(std::ostream::operator<<(&std::cout, __n_1), &data_2092), __n_2), &data_2096), (__n_1 - __n_2)), std::endl<char>);
+        }
+        else if (__n == 2)
+        {
+            std::istream::operator>>(std::istream::operator>>(&std::cin, &__n_1), &__n_2);
+            std::ostream::operator<<(std::ostream::operator<<(std::operator<<<std::char_traits<char> >(std::ostream::operator<<(std::operator<<<std::char_traits<char> >(std::ostream::operator<<(&std::cout, __n_1), &data_2092), __n_2), &data_2096), (__n_2 + __n_1)), std::endl<char>);
+        }
+        else if (__n == 3)
+        {
+            std::istream::operator>>(std::istream::operator>>(&std::cin, &__n_1), &__n_2);
+            class std::ostream* rax_32 = std::operator<<<std::char_traits<char> >(std::ostream::operator<<(std::operator<<<std::char_traits<char> >(std::ostream::operator<<(&std::cout, __n_1), &data_2092), __n_2), &data_2096);
+            int32_t temp2_1;
+            int32_t temp3_1;
+            temp2_1 = HIGHD(__n_1);
+            temp3_1 = LOWD(__n_1);
+            std::ostream::operator<<(std::ostream::operator<<(rax_32, (COMBINE(temp2_1, temp3_1) / __n_2)), std::endl<char>);
+        }
+    }
+    if (rax == *(fsbase + 0x28))
+    {
+        return 0;
+    }
+    __stack_chk_fail();
+    /* no return */
+}
